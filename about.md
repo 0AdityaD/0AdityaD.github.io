@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+I'm a CS major (Turing Scholar) at UT Austin.
 
-### More Information
+I love anything relating to CS theory and math / number theory.
 
-A place to include any other types of information that you'd like to include about yourself.
-
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+I do competitive programming in my free time. 
