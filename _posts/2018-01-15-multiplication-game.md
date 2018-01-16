@@ -67,7 +67,7 @@ scan through the list of primes.
 ```cpp
 vector<llint> divisors(llint n) {
     vector<llint> res;
-    for(prime: primes) {
+    for(llint prime: primes) {
         if(prime * prime > n) {
             break;
         }
@@ -90,7 +90,37 @@ With these pieces we can play the game.
 ## Playing the game
 
 Immediately what comes to mind is brute force simulation of
-the game. However, the bounds for *N* are too large for a
-brute force simulation of the game to be effective.
+the game. Due to the optimality of both players, one possible
+way to simulate a game is through minimax. Minimax means that
+a player plays in order to minimize the maximum value of the
+next player's turn.
 
+In this game it means that each turn, the current player can
+simulate the game for every single possible move and determine
+which one yields the worst outcome for the opponent in order
+to make his move.
 
+Coding this up is not difficult. We define a few states to
+represent a win, loss, or tie. We can define *-1* to represent
+a loss, *0* to represent a tie and *1* to represent a win.
+
+```cpp
+int minimax(vector<llint>& divs, llint n, llint m=1) {
+    if(m > n) {
+        // tie
+        return 0;
+    }
+    if(m == n) {
+        // the previous player just won so it is a
+        // loss for the current player
+        return -1;
+    }
+    // we take the minimum of the maximum of all the possible
+    // moves by the next player
+    int best = 1;
+    for(llint prime: divs) {
+        best = min(best, minimax(divs, n, m * prime));
+    }
+    return -best;
+}
+```
