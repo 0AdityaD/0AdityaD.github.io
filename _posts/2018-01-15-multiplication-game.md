@@ -124,3 +124,35 @@ int minimax(vector<llint>& divs, llint n, llint m=1) {
     return -best;
 }
 ```
+
+This code is very inefficient, it is exponential in runtime. 
+Notice that there many overlapping subproblems that will be 
+calculated when running this code. For example, we can consider
+the case of *N=12*. The prime divisors of *12* are *2* and *3*.
+The code above will run the function *minimax([2, 3], 12, 6)*
+twice. We can eliminate these overlapping subproblems to make
+the runtime *O(sqrt n)* with a very simple memoization.
+
+```cpp
+unordered_map<llint, int> dp; 
+
+int minimax(vector<llint>& divs, llint n, llint m) {
+    if(m > n) {
+        return 0;
+    }
+    if(m == n) {
+        return -1;
+    }
+    if(dp.find(m) != dp.end()) {
+        return dp[m];
+    }
+    int best = 1;
+    for(llint prime: divs) {
+        best = min(best, minimax(divs, n, m * prime));
+    }
+    dp[m] = -best;
+    return -best;
+}
+```
+
+From here, we can complete the problem easily.
